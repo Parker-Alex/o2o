@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are by default assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
+<!--<?xml version="1.0" encoding="utf-8" ?>-->
+<!--&lt;!&ndash;scan为true时，当配置文件发生变化，将会被重新加载-->
+<!--scanPeriod说明每60秒扫描一次配置文件-->
+<!--debug属性为true时，讲打印logback的内部日志，实时查看logback运行状态&ndash;&gt;-->
+<!--<configuration scan="true" scanPeriod="60 seconds" debug="false">-->
+    <!--&lt;!&ndash;定义日志的级别&ndash;&gt;-->
+    <!--<property name="log.level" value="debug"/>-->
+    <!--&lt;!&ndash;定义日志的最大保留时间为30天&ndash;&gt;-->
+    <!--<property name="log.maxHistory" value="30"/>-->
+    <!--&lt;!&ndash;定义日志的文件路径，${catalina.base}表示tomcat实例的根目录&ndash;&gt;-->
+    <!--<property name="log.filePath" value="${catalina.base}/logs/webapp"/>-->
+    <!--&lt;!&ndash;定义日志的输出格式-->
+    <!--%d表示日期，%thread表示线程名，%-5level表示级别从左显示5个字符，%msg表示日志消息，%n表示换行&ndash;&gt;-->
+    <!--<property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS} [%thread] %-5level %logger{55} -%msg%n"/>-->
+
+    <!--&lt;!&ndash;设置日志输出到控制台&ndash;&gt;-->
+    <!--<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">-->
+        <!--&lt;!&ndash;改标签能讲日志信息转化为字符串，再讲字符串写入文件中&ndash;&gt;-->
+        <!--<encoder>-->
+            <!--&lt;!&ndash;使日志按规定的格式输出&ndash;&gt;-->
+            <!--<pattren>${log.pattern}</pattren>-->
+        <!--</encoder>-->
+    <!--</appender>-->
+
+    <!--&lt;!&ndash;处理debug级别的日志&ndash;&gt;-->
+    <!--<appender name="debugAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--&lt;!&ndash;定义文件路径&ndash;&gt;-->
+        <!--<file>${log.filePath}/debug.log</file>-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+            <!--&lt;!&ndash;设置日志文件名格式&ndash;&gt;-->
+            <!--<fileNamePattern>${log.filePath}/debug/debug.%d{yyyy-MM-dd}.log.rar</fileNamePattern>-->
+            <!--&lt;!&ndash;设置文件最大保留时间&ndash;&gt;-->
+            <!--<maxHistory>${log.maxHistory}</maxHistory>-->
+        <!--</rollingPolicy>-->
+        <!--<encoder>-->
+            <!--<pattren>${log.pattern}</pattren>-->
+        <!--</encoder>-->
+        <!--&lt;!&ndash;定义过滤器，只接受debug级别的日志&ndash;&gt;-->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+            <!--<level>DEBUG</level>-->
+            <!--<onMatch>ACCEPT</onMatch>-->
+            <!--<onMisMatch>DENY</onMisMatch>-->
+        <!--</filter>-->
+    <!--</appender>-->
+
+    <!--&lt;!&ndash;处理info级别的日志&ndash;&gt;-->
+    <!--<appender name="infoAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--<file>${log.filePath}/info.log</file>-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+            <!--<fileNamePattern>${log.filePath}/info/info.%d{yyyy-MM-dd}.log.rar</fileNamePattern>-->
+            <!--<maxHistory>${log.maxHistory}</maxHistory>-->
+        <!--</rollingPolicy>-->
+        <!--<encoder>-->
+            <!--<pattren>${log.pattern}</pattren>-->
+        <!--</encoder>-->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+            <!--<level>INFO</level>-->
+            <!--<onMatch>ACCEPT</onMatch>-->
+            <!--<onMisMatch>DENY</onMisMatch>-->
+        <!--</filter>-->
+    <!--</appender>-->
+
+    <!--&lt;!&ndash;处理error级别的日志&ndash;&gt;-->
+    <!--<appender name="errorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--<file>${log.filePath}/error.log</file>-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+            <!--<fileNamePattern>${log.filePath}/debug/debug.%d{yyyy-MM-dd}.log.rar</fileNamePattern>-->
+            <!--<maxHistory>${log.maxHistory}</maxHistory>-->
+        <!--</rollingPolicy>-->
+        <!--<encoder>-->
+            <!--<pattren>${log.pattern}</pattren>-->
+        <!--</encoder>-->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+            <!--<level>ERROR</level>-->
+            <!--<onMatch>ACCEPT</onMatch>-->
+            <!--<onMisMatch>DENY</onMisMatch>-->
+        <!--</filter>-->
+    <!--</appender>-->
+
+    <!--&lt;!&ndash;存放日志对象&ndash;&gt;-->
+    <!--<logger name="com.smart.o2o" level="${log.level}" additivity="true">-->
+        <!--<appender-ref ref="debugAppender"/>-->
+        <!--<appender-ref ref="infoAppender"/>-->
+        <!--<appender-ref ref="errorAppender"/>-->
+    <!--</logger>-->
+    <!--<root levle="info">-->
+        <!--<appender-ref ref="consoleAppender"/>-->
+    <!--</root>-->
+<!--</configuration>-->

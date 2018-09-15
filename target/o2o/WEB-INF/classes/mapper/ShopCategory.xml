@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.o2o.dao.ShopCategoryDao">
+    <select id="readShopCategoryList" resultType="com.smart.o2o.entity.ShopCategory">
+        select *
+        from tb_shopcategory
+        <where>
+            <if test="shopCategoryCondition != null">
+                and parent_id is not null
+            </if>
+            <if test="shopCategoryCondition.parent != null">
+                and parent_id = #{shopCategoryCondition.parent.shopCategoryId}
+            </if>
+        </where>
+        order by priority desc ;
+    </select>
+    <select id="getByName" resultType="com.smart.o2o.entity.ShopCategory">
+        select *
+        from tb_shopcategory
+        where shopcategory_name = #{shopCategoryName}
+    </select>
+</mapper>

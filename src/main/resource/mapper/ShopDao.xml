@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.o2o.dao.ShopDao">
+    <resultMap id="shopMap" type="com.smart.o2o.entity.Shop">
+        <id column="shop_id" property="shopId"/>
+        <result column="shop_name" property="shopName"/>
+        <result column="priority" property="priority"/>
+        <result column="shop_img" property="shopImg"/>
+        <result column="shop_addr" property="shopAddr"/>
+        <result column="shop_desc" property="shopDesc"/>
+        <result column="shop_tel" property="shopTel"/>
+        <result column="shop_advice" property="shopAdvice"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_edit_time" property="lastEditTime"/>
+        <association column="shop_user_id" property="user" javaType="com.smart.o2o.entity.User">
+            <id column="user_id" property="userId"/>
+            <result column="user_name" property="userNmae"/>
+        </association>
+        <association property="area" column="shop_area_id" javaType="com.smart.o2o.entity.Area">
+            <id column="area_id" property="areaId"/>
+            <result column="area_name" property="areaName"/>
+        </association>
+        <association property="shopCategory" column="shop_shopcategory_id" javaType="com.smart.o2o.entity.ShopCategory">
+            <id column="shopcatogory_id" property="shopCategoryId"/>
+            <result column="shopcategory_name" property="shopCategoryName"/>
+        </association>
+    </resultMap>
+    <select id="queryShopList" resultMap="shopMap">
+        select
+               s.shop_id,
+               s.shop_name,
+               s.shop_tel,
+               s.shop_desc,
+               s.shop_addr,
+               s.priority,
+               s.shop_img,
+               s.create_time,
+               s.last_edit_time,
+               s.status,
+               s.shop_advice,
+               a.area_id,
+               a.area_name,
+               sc.shopcategory_id,
+               sc.shopcategory_name
+        from tb_shop s, tb_area a, tb_shopcategory sc
+        <where>
+            <if test="shopCondition.shopName != null">
+                and s.shop_name like '%${shopCondition.shopName}%'
+            </if>
+            <if test="shopCondition.status != null">
+                and s.status = #{shopCondition.status}
+            </if>
+            <if test="shopCondition.area != null and shopCondition.area.areaId != null">
+                and s.shop_area_id = #{shopCondition.area.areaId}
+            </if>
+            <if test="shopCondition.shopCategory != null and shopCondition.shopCategory.shopCategoryId != null">
+                and s.shop_shopcategory_id = #{shopCondition.shopCategory.shopCategoryId}
+            </if>
+            <if test="shopCondition.user != null and shopCondition.user.userId != null">
+                and s.shop_user_id = #{shopCondition.user.userId}
+            </if>
+            and s.shop_area_id=a.area_id
+            and s.shop_shopcategory_id=sc.shopcategory_id
+        </where>
+        order by
+        s.priority desc
+        limit #{start}, #{size};
+    </select>
+    <select id="getCount" resultType="int">
+      select
+      count(1)
+      from tb_shop s, tb_area a, tb_shopcategory sc
+        <where>
+            <if test="shopCondition.shopName != null">
+                and s.shop_name like '%${shopCondition.shopName}%'
+            </if>
+            <if test="shopCondition.status != null">
+                and s.status = #{shopCondition.status}
+            </if>
+            <if test="shopCondition.area != null and shopCondition.area.areaId != null">
+                and s.shop_area_id = #{shopCondition.area.areaId}
+            </if>
+            <if test="shopCondition.shopCategory != null and shopCondition.shopCategory.shopCategoryId != null">
+                and s.shop_shopcategory_id = #{shopCondition.shopCategory.shopCategoryId}
+            </if>
+            <if test="shopCondition.user != null and shopCondition.user.userId != null">
+                and s.shop_user_id = #{shopCondition.user.userId}
+            </if>
+            and s.shop_area_id=a.area_id
+            and s.shop_shopcategory_id=sc.shopcategory_id
+        </where>
+    </select>
+    <select id="readByShopId" resultMap="shopMap">
+        select
+               s.shop_id,
+               s.shop_name,
+               s.shop_tel,
+               s.shop_desc,
+               s.shop_addr,
+               s.priority,
+               s.shop_img,
+               s.create_time,
+               s.last_edit_time,
+               s.status,
+               s.shop_advice,
+               a.area_id,
+               a.area_name,
+               sc.shopcategory_id,
+               sc.shopcategory_name
+        from tb_shop s, tb_area a, tb_shopcategory sc
+        where s.shop_area_id=a.area_id
+        and s.shop_shopcategory_id=sc.shopcategory_id
+        and s.shop_id=#{shopId};
+    </select>
+
+    <insert id="createShop" useGeneratedKeys="true" keyColumn="shop_id" keyProperty="shopId">
+        insert into tb_shop (shop_name,
+                             priority,
+                             shop_img,
+                             shop_addr,
+                             shop_desc,
+                             shop_tel,
+                             shop_advice,
+                             status,
+                             create_time,
+                             last_edit_time,
+                             shop_area_id,
+                             shop_user_id,
+                             shop_shopcategory_id)
+        values (#{shopName},#{priority},#{shopImg},#{shopAddr},#{shopDesc},#{shopTel},#{shopAdvice},#{status}
+                       ,#{createTime},#{lastEditTime},#{area.areaId},#{user.userId},#{shopCategory.shopCategoryId});
+    </insert>
+    <update id="updateShop" parameterType="com.smart.o2o.entity.Shop">
+        update tb_shop
+        <set>
+            <if test="shopName!=null">shop_name=#{shopName},</if>
+            <if test="priority!=null">priority=#{priority},</if>
+            <if test="shopImg!=null">shop_img=#{shopImg},</if>
+            <if test="shopAddr!=null">shop_addr=#{shopAddr},</if>
+            <if test="shopDesc!=null">shop_desc=#{shopDesc},</if>
+            <if test="shopTel!=null">shop_tel=#{shopTel},</if>
+            <if test="shopAdvice!=null">shop_advice=#{shopAdvice},</if>
+            <if test="status!=null">status=#{status},</if>
+            <if test="lastEditTime!=null">last_edit_time=#{lastEditTime},</if>
+            <if test="area!=null">shop_area_id=#{area.areaId},</if>
+            <if test="shopCategory!=null">shop_shopcategory_id=#{shopCategory.shopCategoryId}</if>
+        </set>
+        where shop_id = #{shopId};
+    </update>
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.o2o.dao.ProductCategoryDao">
+    <select id="listBySid" parameterType="long" resultType="com.smart.o2o.entity.ProductCategory">
+        select * from tb_productcategory where sid = #{sid} order by priority desc;
+    </select>
+    <insert id="batchlist" parameterType="java.util.List">
+        insert into tb_productcategory
+        (name,priority, create_time, sid)
+        values
+        <foreach collection="list" index="index" separator="," item="pc">
+            (
+            #{pc.name},
+            #{pc.priority},
+            #{pc.createTime},
+            #{pc.sid}
+            )
+        </foreach>
+    </insert>
+    <delete id="deletePC" parameterType="long">
+        delete from tb_productcategory where id = #{id} and sid = #{sid};
+    </delete>
+</mapper>

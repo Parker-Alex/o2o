@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.o2o.dao.AreaDao">
+    <select id="readAreaList" resultType="com.smart.o2o.entity.Area">
+        select *
+        from tb_area
+        order by
+        area_priority desc ;
+    </select>
+</mapper>
