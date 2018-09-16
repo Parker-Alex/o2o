@@ -115,7 +115,7 @@ create table tb_product(
   product_category_id int(11) default null ,
   primary key (product_id),
   constraint FK_PRO_SHOP_ID foreign key (product_shop_id) references tb_shop (shop_id),
-  constraint FK_PRO_CATEGORY_ID foreign key (product_category_id) references tb_shopcategory (shopcategory_id)
+  constraint FK_PRO_CATEGORY_ID foreign key (product_category_id) references tb_productcategory (id)
 )engine = InnoDB auto_increment = 1 default charset = utf8;
 
 create table tb_img(

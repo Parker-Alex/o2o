@@ -1,6 +1,7 @@
 package com.smart.o2o.service;
 
 import com.smart.o2o.BaseTest;
+import com.smart.o2o.dto.ImageHandler;
 import com.smart.o2o.dto.ShopExecution;
 import com.smart.o2o.entity.Area;
 import com.smart.o2o.entity.Shop;
@@ -35,17 +36,18 @@ public class ShopServiceTest extends BaseTest {
         shop.setShopCategory(shopCategory);
         shop.setUser(user);
         shop.setArea(area);
-        shop.setShopName("Service测试5");
+        shop.setShopName("重构后的测试");
         shop.setPriority(2);
-        shop.setShopImg("s-test");
-        shop.setShopDesc("s-test");
-        shop.setShopTel("s-test");
+        shop.setShopImg("重构后的测试");
+        shop.setShopDesc("重构后的测试");
+        shop.setShopTel("重构后的测试");
         shop.setShopAdvice(ShopEnum.CHECK.getStateInfo());
         shop.setCreateTime(new Date());
         shop.setStatus(ShopEnum.CHECK.getState());
         File file = new File("E:/File/o2o/1.jpg");
         InputStream is = new FileInputStream(file);
-        ShopExecution shopExecution = shopService.createShop(shop, is, file.getName());
+        ImageHandler imageHandler = new ImageHandler(file.getName(), is);
+        ShopExecution shopExecution = shopService.createShop(shop, imageHandler);
         assertEquals(ShopEnum.CHECK.getState(), shopExecution.getState());
     }
 
@@ -56,7 +58,8 @@ public class ShopServiceTest extends BaseTest {
         shop.setShopName("测试后的名字");
         File file = new File("E:/File/img/1.jpg");
         InputStream inputStream = new FileInputStream(file);
-        ShopExecution shopExecution = shopService.updateShop(shop, inputStream, file.getName());
+        ImageHandler imageHandler = new ImageHandler(file.getName(), inputStream);
+        ShopExecution shopExecution = shopService.updateShop(shop, imageHandler);
         assertEquals(ShopEnum.SUCCESS.getState(), shopExecution.getState());
         System.out.println("图片地址: " + shopExecution.getShop().getShopImg());
     }

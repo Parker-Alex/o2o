@@ -1,5 +1,6 @@
 package com.smart.o2o.util;
 
+import com.smart.o2o.dto.ImageHandler;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
 import org.slf4j.Logger;
@@ -24,10 +25,10 @@ public class ImageUtil {
     //定义随机数
     private static final Random r = new Random();
 
-    public static String generateThumbnail(InputStream inputStream, String targetAddr, String fileName) {
+    public static String generateThumbnail(String targetAddr, ImageHandler imageHandler) {
 
         String realFileName = getRandomFileName();
-        String extension = getFileExtension(fileName);
+        String extension = getFileExtension(imageHandler.getImageName());
         makeDirPath(targetAddr);
         //文件相对路径
         String relativeAddr = targetAddr + realFileName + extension;
@@ -39,12 +40,41 @@ public class ImageUtil {
 
         try {
             //对用户上传的图片进行处理
-            Thumbnails.of(inputStream).size(200, 200)
+            Thumbnails.of(imageHandler.getImage()).size(200, 200)
                     //添加水印(参数1：水印位置 参数2：水印的路径 参数3：水印透明度)
                     .watermark(Positions.BOTTOM_RIGHT,
                             ImageIO.read(new File(basePath + "/watermark.jpg")), 0.5f)
                     //指定压缩程度
                     .outputQuality(0.8)
+                    //指定处理后图片的生成位置
+                    .toFile(dest);
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+//            throw new RuntimeException("创建缩略图失败:" + e.toString());
+        }
+        return relativeAddr;
+    }
+
+    public static String generateNormal(String targetAddr, ImageHandler imageHandler) {
+
+        String realFileName = getRandomFileName();
+        String extension = getFileExtension(imageHandler.getImageName());
+        makeDirPath(targetAddr);
+        //文件相对路径
+        String relativeAddr = targetAddr + realFileName + extension;
+//        logger.debug("current relativeAddr is:" + relativeAddr);
+
+        //文件总路径：根路径+相对路径
+        File dest = new File(PathUtil.getImgBasePath() + relativeAddr);
+//        logger.debug("current complete addr is:" + PathUtil.getImgBasePath() + relativeAddr);
+
+        try {
+            //对用户上传的图片进行处理
+            Thumbnails.of(imageHandler.getImage()).size(337, 640)
+                    //添加水印(参数1：水印位置 参数2：水印的路径 参数3：水印透明度)
+                    .watermark(Positions.BOTTOM_RIGHT,
+                            ImageIO.read(new File(basePath + "/watermark.jpg")), 0.9f)
                     //指定处理后图片的生成位置
                     .toFile(dest);
         } catch (IOException e) {

@@ -1,9 +1,10 @@
 package com.smart.o2o.enums;
 
 public enum ProductEnum {
-    NULL(0, "商品为空"),
-    SUCCESS(1, "操作成功"),
-    FAIL(-1, "操作失败");
+    NULL(-1, "商品为空"),
+    OUT(0, "商品下架"),
+    SUCCESS(1, "商品上架"),
+    FAIL(-2, "操作失败");
 
     private int code;
 

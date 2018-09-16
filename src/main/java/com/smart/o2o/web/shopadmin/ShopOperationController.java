@@ -1,6 +1,7 @@
 package com.smart.o2o.web.shopadmin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.smart.o2o.dto.ImageHandler;
 import com.smart.o2o.dto.ShopExecution;
 import com.smart.o2o.entity.Area;
 import com.smart.o2o.entity.Shop;
@@ -147,7 +148,8 @@ public class ShopOperationController {
             //注册店铺
             ShopExecution shopExecution;
             try {
-                shopExecution = shopService.createShop(shop, shopImg.getInputStream(), shopImg.getOriginalFilename());
+                ImageHandler imageHandler = new ImageHandler(shopImg.getOriginalFilename(), shopImg.getInputStream());
+                shopExecution = shopService.createShop(shop, imageHandler);
                 if (shopExecution.getState() == ShopEnum.CHECK.getState()) {
                     map.put("success", true);
                     map.put("msg", "创建成功");
@@ -213,7 +215,8 @@ public class ShopOperationController {
             shop.setUser(user);
             ShopExecution shopExecution;
             try {
-                shopExecution = shopService.updateShop(shop, shopImg.getInputStream(), shopImg.getOriginalFilename());
+                ImageHandler imageHandler = new ImageHandler(shopImg.getOriginalFilename(), shopImg.getInputStream());
+                shopExecution = shopService.updateShop(shop, imageHandler);
                 if (shopExecution.getState() == ShopEnum.SUCCESS.getState()) {
                     map.put("success", true);
                     List<Shop> shopList = (List<Shop>) request.getSession().getAttribute("shopList");
