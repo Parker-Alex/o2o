@@ -9,7 +9,7 @@ public class ProductImg {
     private String imgDesc;
     private Integer priority;
     private Date createTime;
-    private Product product;
+    private Long pid;
 
     public Long getImgId() {
         return imgId;
@@ -51,11 +51,23 @@ public class ProductImg {
         this.createTime = createTime;
     }
 
-    public Product getProduct() {
-        return product;
+    public Long getPid() {
+        return pid;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setPid(Long pid) {
+        this.pid = pid;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductImg{" +
+                "imgId=" + imgId +
+                ", imgAddr='" + imgAddr + '\'' +
+                ", imgDesc='" + imgDesc + '\'' +
+                ", priority=" + priority +
+                ", createTime=" + createTime +
+                ", pid=" + pid +
+                '}';
     }
 }

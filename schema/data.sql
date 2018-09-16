@@ -135,4 +135,12 @@ FOREIGN KEY (sid) REFERENCES tb_shop (shop_id);
 
 alter table tb_shop add unique key (shop_name);
 
-ALTER TABLE tb_productcategory CHANGE pc_shop_id sid int(11)
+ALTER TABLE tb_productcategory CHANGE pc_shop_id sid int(11);
+
+ALTER TABLE tb_img CHANGE img_product_id pid int(11);
+
+ALTER TABLE tb_product CHANGE product_shop_id sid int(11);
+
+ALTER TABLE tb_product CHANGE product_category_id pcid int(11);
+
+ALTER TABLE tb_img MODIFY priority int(2) DEFAULT '0'
