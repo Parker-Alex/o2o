@@ -115,7 +115,6 @@
         and s.shop_shopcategory_id=sc.shopcategory_id
         and s.shop_id=#{shopId};
     </select>
-
     <insert id="createShop" useGeneratedKeys="true" keyColumn="shop_id" keyProperty="shopId">
         insert into tb_shop (shop_name,
                              priority,

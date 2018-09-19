@@ -3,6 +3,7 @@ package com.smart.o2o.web.shopadmin;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(value = "/shop")
@@ -27,5 +28,15 @@ public class PageController {
     @RequestMapping("/productcategorylist")
     public String productcategorylist() {
         return "shop/productCategoryList";
+    }
+
+    @RequestMapping("/productop")
+    public String addProduct() {
+        return "shop/productoperation";
+    }
+
+    @RequestMapping("/productlist")
+    public String productList() {
+        return "shop/productlist";
     }
 }

@@ -55,6 +55,20 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    @Override
+    public ProductExecution getProductById(Long pid) {
+        try {
+            Product product = productDao.getProductById(pid);
+            if (product == null) {
+                return new ProductExecution(ProductEnum.NULL);
+            }else {
+                return new ProductExecution(product, ProductEnum.SUCCESS);
+            }
+        }catch (Exception e) {
+            throw new ProductException("获取商品失败: " + e.toString());
+        }
+    }
+
     /**
      * 添加商品缩略图方法
      * @param product

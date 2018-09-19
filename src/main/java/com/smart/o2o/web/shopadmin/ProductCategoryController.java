@@ -25,6 +25,11 @@ public class ProductCategoryController {
     @Autowired
     private ProductCategoryService productCategoryService;
 
+    /**
+     * 得到商品类别列表方法
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/productcategorylist", method = RequestMethod.GET)
     @ResponseBody
     public Result<List<ProductCategory>> productcategorylist(HttpServletRequest request) {
@@ -38,6 +43,12 @@ public class ProductCategoryController {
         }
     }
 
+    /**
+     * 添加商品类别方法
+     * @param list
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/addproductcategory", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> addProductCategory(@RequestBody List<ProductCategory> list,
@@ -69,6 +80,12 @@ public class ProductCategoryController {
         return map;
     }
 
+    /**
+     * 删除商品类别方法
+     * @param id
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/deleteproductcategory", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> deleteProductcategory(Long id, HttpServletRequest request) {

@@ -123,4 +123,23 @@ public class Product {
     public void setProductCategory(ProductCategory productCategory) {
         this.productCategory = productCategory;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productId=" + productId +
+                ", productName='" + productName + '\'' +
+                ", priority=" + priority +
+                ", productDesc='" + productDesc + '\'' +
+                ", imgAddr='" + imgAddr + '\'' +
+                ", normalPrice='" + normalPrice + '\'' +
+                ", promotionPrice='" + promotionPrice + '\'' +
+                ", createTime=" + createTime +
+                ", lastEditTime=" + lastEditTime +
+                ", status=" + status +
+                ", productImgs=" + productImgs +
+                ", shop=" + shop +
+                ", productCategory=" + productCategory +
+                '}';
+    }
 }

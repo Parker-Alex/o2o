@@ -22,6 +22,16 @@ public class Shop {
 
     private Long scid;
 
+    //视频中出现,但不知道有何用
+//    private Long uid;
+//    public Long getUid() {
+//        return uid;
+//    }
+//
+//    public void setUid(Long uid) {
+//        this.uid = uid;
+//    }
+
     public Long getScid() {
         return scid;
     }

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -57,8 +58,8 @@ public class ProductController {
             if (multipartResolver.isMultipart(request)) {
                 servletRequest = (MultipartHttpServletRequest) request;
                 //得到商品缩略图
-                MultipartFile file = servletRequest.getFile("file");
-                imageHandler = new ImageHandler(file.getOriginalFilename(), file.getInputStream());
+                MultipartFile thumbnail = servletRequest.getFile("thumbnail");
+                imageHandler = new ImageHandler(thumbnail.getOriginalFilename(), thumbnail.getInputStream());
                 for (int i = 0; i < MAX_COUNT; i++) {
                     //得到商品详情图
                     MultipartFile productImg = servletRequest.getFile("productImg" + i);
@@ -92,9 +93,7 @@ public class ProductController {
         if (product != null && imageHandler != null && handlerList.size() > 0) {
             try {
                 Shop currentShop = (Shop) request.getSession().getAttribute("currentShop");
-                Shop shop = new Shop();
-                shop.setShopId(currentShop.getShopId());
-                product.setShop(shop);
+                product.setShop(currentShop);
                 ProductExecution pe = productService.addProduct(product, imageHandler, handlerList);
                 if (pe.getCode() == ProductEnum.SUCCESS.getCode()) {
                     map.put("success", true);
@@ -110,6 +109,32 @@ public class ProductController {
         }else {
             map.put("success", false);
             map.put("msg", "输入的商品信息为空，请重新输入");
+        }
+        return map;
+    }
+
+    @RequestMapping(value = "/getproductbyid", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getProductById(@RequestParam("pid") Long pid) {
+        Map<String, Object> map = new HashMap<>();
+        if (pid != null) {
+            try {
+                ProductExecution pe = productService.getProductById(pid);
+                if (pe.getCode() == ProductEnum.SUCCESS.getCode()) {
+                    map.put("success", true);
+                    map.put("product", pe.getProduct());
+                }else {
+                    map.put("success", false);
+                    map.put("msg", pe.getMsg());
+                }
+            }catch (ProductException e) {
+                map.put("success", false);
+                map.put("msg", e.toString());
+                return map;
+            }
+        }else {
+            map.put("success", false);
+            map.put("msg", "商品id为空");
         }
         return map;
 

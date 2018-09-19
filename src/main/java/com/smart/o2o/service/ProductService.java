@@ -11,4 +11,6 @@ public interface ProductService {
 
     ProductExecution addProduct(Product product, ImageHandler imageHandler
             , List<ImageHandler> imageHandlers) throws ProductException;
+
+    ProductExecution getProductById(Long pid);
 }

@@ -3,11 +3,68 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smart.o2o.dao.ProductDao">
+    <resultMap id="productMap" type="com.smart.o2o.entity.Product">
+        <id column="product_id" property="productId"/>
+        <result column="product_name" property="productName"/>
+        <result column="product_desc" property="productDesc"/>
+        <result column="priority" property="priority"/>
+        <result column="img_addr" property="imgAddr"/>
+        <result column="normal_price" property="normalPrice"/>
+        <result column="promotion_price" property="promotionPrice"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_edit_time" property="lastEditTime"/>
+        <association column="sid" property="shop" javaType="com.smart.o2o.entity.Shop">
+            <id column="shop_id" property="shopId"/>
+            <result column="shop_name" property="shopName"/>
+        </association>
+        <association column="pcid" property="productCategory" javaType="com.smart.o2o.entity.ProductCategory">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+        </association>
+    </resultMap>
     <insert id="addProduct" parameterType="com.smart.o2o.entity.Product" useGeneratedKeys="true"
             keyProperty="productId" keyColumn="product_id">
         insert into tb_product(product_name, priority, product_desc, img_addr, normal_price, promotion_price,
                                create_time, last_edit_time, status, sid, pcid)
         values (#{productName},#{priority},#{productDesc},#{imgAddr},#{normalPrice},#{promotionPrice},#{createTime},
-                       #{lastEditTime},#{status},#{shop.shopId},#{shopCategory.})
+                       #{lastEditTime},#{status},#{shop.shopId},#{productCategory.id})
     </insert>
+    <update id="updateProduct" parameterType="com.smart.o2o.entity.Product">
+        update tb_product
+        <set>
+            <if test="productName!=null">product_name=#{productName},</if>
+            <if test="priority!=null">priority=#{priority},</if>
+            <if test="productDesc!=null">product_desc=#{productDesc},</if>
+            <if test="imgAddr!=null">img_addr=#{imgAddr},</if>
+            <if test="normalPrice!=null">normal_price=#{normalPrice},</if>
+            <if test="promotionPrice!=null">promotion_price=#{promotionPrice},</if>
+            <if test="lastEditTime!=null">last_edit_time=#{lastEditTime},</if>
+            <if test="status!=null">status=#{status},</if>
+            <if test="shop!=null">sid=#{shop.shopId},</if>
+            <if test="productCategory!=null">pcid=#{productCategory.id}</if>
+        </set>
+        where product_id = #{productId};
+    </update>
+    <select id="getProductById" resultMap="productMap">
+        select
+               p.product_id,
+               p.product_name,
+               p.product_desc,
+               p.priority,
+               p.img_addr,
+               p.normal_price,
+               p.promotion_price,
+               p.status,
+               p.last_edit_time,
+               p.create_time,
+               s.shop_id,
+               s.shop_name,
+               pc.id,
+               pc.name
+        from tb_product p, tb_productcategory pc, tb_shop s
+        where p.sid = s.shop_id
+        and p.pcid = pc.id
+        and product_id = #{pid};
+    </select>
 </mapper>
