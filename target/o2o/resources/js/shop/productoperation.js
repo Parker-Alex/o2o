@@ -27,10 +27,20 @@ $(function () {
             function (result) {
                 if (result.success){
                     var product = result.product;
+                    var pclist = result.pclist;
+                    var selectedId = product.productCategory.id;
                     $("#name").val(product.productName);
-                    $("#category").append($("<option></option>")
-                        .append(product.productCategory.name).attr("data-id", product.productCategory.id))
-                        .attr("disabled", "disabled");
+                    // $("#category").append($("<option></option>")
+                    //     .append(product.productCategory.name).attr("data-id", product.productCategory.id))
+                    //     .attr("disabled", "disabled");
+                    $.each(pclist, function (index, item) {
+                        var isSelect = selectedId === item.id;
+                        if (isSelect){
+                            $("<option selected></option>").append(item.name).attr("data-id", item.id).appendTo("#category");
+                        }else {
+                            $("<option></option>").append(item.name).attr("data-id", item.id).appendTo("#category");
+                        }
+                    });
                     $("#original_price").val(product.normalPrice);
                     $("#promote_price").val(product.promotionPrice);
                     $("#priority").val(product.priority);
@@ -106,6 +116,7 @@ $(function () {
             success: function (result) {
                 if (result.success) {
                     alert("提交成功");
+                    location.href = "/shop/productlist";
                 }else {
                     alert("提交失败: " + result.msg);
                 }
@@ -113,9 +124,10 @@ $(function () {
             }
         });
     });
-    // $("#product_back").click(function () {
-    //     history.back();
-    // });
+
+    $("#product_back").click(function () {
+        history.back();
+    });
 
     //点击添加详情图后，又生成文件上传框方法
     $(".detail-img-div").on("change",".detail-img:last-child", function () {

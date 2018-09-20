@@ -9,10 +9,10 @@ public interface ShopCategoryDao {
 
     /**
      * 条件查询店铺类别
-     * @param shopCategoryCondition
+     * @param condition
      * @return
      */
-    List<ShopCategory> readShopCategoryList(@Param("shopCategoryCondition")ShopCategory shopCategoryCondition);
+    List<ShopCategory> readShopCategoryList(@Param("condition")ShopCategory condition);
 
     ShopCategory getByName(String name);
 }

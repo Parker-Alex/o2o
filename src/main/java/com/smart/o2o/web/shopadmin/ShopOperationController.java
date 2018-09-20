@@ -249,7 +249,7 @@ public class ShopOperationController {
     @RequestMapping(value = "/getshoplist", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> getShopList(HttpServletRequest request) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         Shop shopCondition = new Shop();
         User user = new User();
         user.setUserId(1L);

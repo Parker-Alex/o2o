@@ -4,7 +4,8 @@ public enum ProductEnum {
     NULL(-1, "商品为空"),
     OUT(0, "商品下架"),
     SUCCESS(1, "商品上架"),
-    FAIL(-2, "操作失败");
+    FAIL(-2, "操作失败"),
+    SUCCESS_UPDATE(3, "更新成功");
 
     private int code;
 

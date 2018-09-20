@@ -56,17 +56,63 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductExecution getProductById(Long pid) {
-        try {
-            Product product = productDao.getProductById(pid);
-            if (product == null) {
-                return new ProductExecution(ProductEnum.NULL);
+    public Product getProductById(Long pid) {
+        return productDao.getProductById(pid);
+    }
+
+    @Override
+    @Transactional
+    public ProductExecution updateProduct(Product product, ImageHandler imageHandler,
+                                          List<ImageHandler> imageHandlers) throws ProductException {
+        if (product != null) {
+            product.setLastEditTime(new Date());
+            if (imageHandler != null) {
+                //将原来的缩略图删除
+                ImageUtil.deleteFileOrPath(product.getImgAddr());
+                //再添加新的缩略图
+                addImage(product, imageHandler);
             }else {
-                return new ProductExecution(product, ProductEnum.SUCCESS);
+                throw new ProductException("商品缩略图为空");
             }
-        }catch (Exception e) {
-            throw new ProductException("获取商品失败: " + e.toString());
+            if (imageHandlers != null && imageHandlers.size() > 0) {
+                List<ProductImg> productImgs = productImgDao.listByPid(product.getProductId());
+                for (ProductImg pi : productImgs) {
+                    ImageUtil.deleteFileOrPath(pi.getImgAddr());
+                }
+                int delnum = productImgDao.deletePI(product.getProductId());
+                if (delnum < 0) {
+                    throw new ProductException("删除详情图失败");
+                }
+                addImageList(product, imageHandlers);
+            }else {
+                throw new ProductException("商品详情图为空");
+            }
+            int num = productDao.updateProduct(product);
+            if (num > 0) {
+                return new ProductExecution(product, ProductEnum.SUCCESS_UPDATE);
+            }else {
+                return new ProductExecution(ProductEnum.FAIL);
+            }
+        }else {
+            return new ProductExecution(ProductEnum.NULL);
         }
+    }
+
+    @Override
+    public ProductExecution productListByCondition(Product product, int start, int size) {
+        int startIndex = start > 0 ? (start - 1)*size : 0;
+        List<Product> productList = productDao.productList(product, startIndex, size);
+        int count = productDao.count(product);
+        ProductExecution pe = new ProductExecution();
+        pe.setNum(count);
+        pe.setProducts(productList);
+        return pe;
+    }
+
+    @Override
+    @Transactional
+    public int changeStatus(Product product) {
+        return productDao.updateProduct(product);
     }
 
     /**

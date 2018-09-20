@@ -19,7 +19,6 @@ public class PageController {
         return "shop/shoplist";
     }
 
-
     @RequestMapping("/shopmanagement")
     public String practiceShop() {
         return "shop/shopmanagement";

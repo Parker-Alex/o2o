@@ -1,6 +1,7 @@
 package com.smart.o2o.service.impl;
 
 import com.smart.o2o.dao.ProductCategoryDao;
+import com.smart.o2o.dao.ProductDao;
 import com.smart.o2o.dto.ProductCategoryExecution;
 import com.smart.o2o.entity.ProductCategory;
 import com.smart.o2o.enums.ProductCategoryEnum;
@@ -17,6 +18,9 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Autowired
     private ProductCategoryDao productCategoryDao;
+
+    @Autowired
+    private ProductDao productDao;
 
     @Override
     public List<ProductCategory> listBySid(Long sid) {
@@ -44,6 +48,15 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Override
     @Transactional
     public ProductCategoryExecution deletePC(Long id, Long sid) {
+        //在删除商品类别时，如果商品与该商品类别存在联系，则无法删除，所以需先将商品中该商品类别id置为空，在进行删除
+        try {
+            int num = productDao.productCategoryIdToNull(id);
+            if (num < 0) {
+                throw new ProductCategoryException("将商品类别id置为空失败");
+            }
+        }catch (Exception e) {
+            throw new ProductCategoryException("update productCategoryId error: " + e.toString());
+        }
         try {
             int num = productCategoryDao.deletePC(id, sid);
             if (num > 0) {

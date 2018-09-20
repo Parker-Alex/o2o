@@ -49,4 +49,15 @@ public class ProductCategory {
     public void setSid(Long sid) {
         this.sid = sid;
     }
+
+    @Override
+    public String toString() {
+        return "ProductCategory{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", priority=" + priority +
+                ", createTime=" + createTime +
+                ", sid=" + sid +
+                '}';
+    }
 }

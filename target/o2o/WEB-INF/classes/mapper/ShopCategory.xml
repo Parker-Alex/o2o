@@ -7,11 +7,14 @@
         select *
         from tb_shopcategory
         <where>
-            <if test="shopCategoryCondition != null">
+            <if test="condition == null">
+                and parent_id is null
+            </if>
+            <if test="condition != null">
                 and parent_id is not null
             </if>
-            <if test="shopCategoryCondition.parent != null">
-                and parent_id = #{shopCategoryCondition.parent.shopCategoryId}
+            <if test="condition != null and condition.parent != null and condition.parent.shopCategoryId != null">
+                and parent_id = #{condition.parent.shopCategoryId}
             </if>
         </where>
         order by priority desc ;

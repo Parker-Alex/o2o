@@ -43,6 +43,7 @@
             keyProperty="productId" keyColumn="product_id">
         update tb_product
         <set>
+            <if test="status!=null">status=#{status},</if>
             <if test="productName!=null">product_name=#{productName},</if>
             <if test="priority!=null">priority=#{priority},</if>
             <if test="productDesc!=null">product_desc=#{productDesc},</if>
@@ -73,14 +74,58 @@
                i.img_addr as detail_img,
                i.img_desc,
                i.priority,
-               i.create_time
-        from tb_product p
-        left join tb_img i
+               i.create_time,
+               s.shop_id,
+               s.shop_name,
+               pc.id,
+               pc.name
+        from tb_shop s, tb_productcategory pc, tb_product p
+             left join tb_img i
         on p.product_id = i.pid
-        where p.product_id = #{pid}
+        where p.product_id = #{pid} and p.sid = s.shop_id and p.pcid = pc.id
         order by i.priority desc
     </select>
     <delete id="deleteProductById" parameterType="long">
         delete from tb_product where product_id = #{pid};
     </delete>
+    <select id="productList" resultType="com.smart.o2o.entity.Product">
+        select * from tb_product
+        <where>
+            <if test="condition.shop != null and condition.shop.shopId != null">
+                and sid = #{condition.shop.shopId}
+            </if>
+            <if test="condition.productCategory != null and condition.productCategory.id != null ">
+                and pcid = #{condition.productCategory.id}
+            </if>
+            <if test="condition.productName != null">
+                and product_name like '%${condition.productName}%'
+            </if>
+            <if test="condition.status != null">
+                and status = #{condition.status}
+            </if>
+        </where>
+        order by
+        priority desc
+        limit #{start},#{size};
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from tb_product
+        <where>
+            <if test="condition.shop != null and condition.shop.shopId != null">
+                and sid = #{condition.shop.shopId}
+            </if>
+            <if test="condition.productCategory != null and condition.productCategory.id != null ">
+                and pcid = #{condition.productCategory.id}
+            </if>
+            <if test="condition.productName != null">
+                and product_name like '%${condition.productName}%'
+            </if>
+            <if test="condition.status != null">
+                and status = #{condition.status}
+            </if>
+        </where>
+    </select>
+    <update id="productCategoryIdToNull" parameterType="long">
+        update tb_product set pcid = null where pcid = #{pcid};
+    </update>
 </mapper>

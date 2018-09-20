@@ -21,9 +21,10 @@ public class ShopCategoryDaoTest extends BaseTest {
         ShopCategory shopCategory2 = new ShopCategory();
         shopCategory1.setShopCategoryId(1L);
         shopCategory2.setParent(shopCategory1);
-        List<ShopCategory> list = shopCategoryDao.readShopCategoryList(new ShopCategory());
-        assertEquals(2, list.size());
-        System.out.println(list);
+        List<ShopCategory> list = shopCategoryDao.readShopCategoryList(null);
+        for (ShopCategory sc : list) {
+            System.out.println(sc);
+        }
     }
 
     @Test
