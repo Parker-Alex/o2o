@@ -44,7 +44,7 @@ public class ShopServiceTest extends BaseTest {
         shop.setShopAdvice(ShopEnum.CHECK.getStateInfo());
         shop.setCreateTime(new Date());
         shop.setStatus(ShopEnum.CHECK.getState());
-        File file = new File("E:/File/o2o/1.jpg");
+        File file = new File("E:/File/o2o/m1.jpg");
         InputStream is = new FileInputStream(file);
         ImageHandler imageHandler = new ImageHandler(file.getName(), is);
         ShopExecution shopExecution = shopService.createShop(shop, imageHandler);
@@ -56,7 +56,7 @@ public class ShopServiceTest extends BaseTest {
         Shop shop = new Shop();
         shop.setShopId(11L);
         shop.setShopName("测试后的名字");
-        File file = new File("E:/File/img/1.jpg");
+        File file = new File("E:/File/img/m1.jpg");
         InputStream inputStream = new FileInputStream(file);
         ImageHandler imageHandler = new ImageHandler(file.getName(), inputStream);
         ShopExecution shopExecution = shopService.updateShop(shop, imageHandler);

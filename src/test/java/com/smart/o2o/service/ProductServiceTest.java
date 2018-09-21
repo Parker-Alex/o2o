@@ -38,14 +38,14 @@ public class ProductServiceTest extends BaseTest {
         product.setNormalPrice("998");
         product.setPromotionPrice("666");
 
-        File file = new File("E:/File/o2o/1.jpg");
+        File file = new File("E:/File/o2o/m21.jpg");
         InputStream is = new FileInputStream(file);
         ImageHandler imageHandler = new ImageHandler(file.getName(), is);
 
-        File img1 = new File("E:/File/o2o/2.jpg");
+        File img1 = new File("E:/File/o2o/m2.jpg");
         InputStream is1 = new FileInputStream(img1);
         ImageHandler imageHandler1 = new ImageHandler(img1.getName(), is1);
-        File img2 = new File("E:/File/o2o/3.jpg");
+        File img2 = new File("E:/File/o2o/m3.jpg");
         InputStream is2 = new FileInputStream(img2);
         ImageHandler imageHandler2 = new ImageHandler(img2.getName(), is2);
         List<ImageHandler> imageHandlers = new ArrayList<>();
@@ -71,14 +71,14 @@ public class ProductServiceTest extends BaseTest {
         product.setNormalPrice("998");
         product.setPromotionPrice("666");
 
-        File file = new File("E:/File/img/2.jpg");
+        File file = new File("E:/File/img/m2.jpg");
         InputStream is = new FileInputStream(file);
         ImageHandler imageHandler = new ImageHandler(file.getName(), is);
 
-        File img1 = new File("E:/File/img/2.jpg");
+        File img1 = new File("E:/File/img/m2.jpg");
         InputStream is1 = new FileInputStream(img1);
         ImageHandler imageHandler1 = new ImageHandler(img1.getName(), is1);
-        File img2 = new File("E:/File/img/2.jpg");
+        File img2 = new File("E:/File/img/m2.jpg");
         InputStream is2 = new FileInputStream(img2);
         ImageHandler imageHandler2 = new ImageHandler(img2.getName(), is2);
         List<ImageHandler> imageHandlers = new ArrayList<>();

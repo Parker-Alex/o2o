@@ -1,12 +1,8 @@
 package com.smart.o2o.web.fore;
 
-import com.smart.o2o.dao.HeadLineDao;
-import com.smart.o2o.dao.ProductCategoryDao;
 import com.smart.o2o.entity.Headline;
-import com.smart.o2o.entity.ProductCategory;
 import com.smart.o2o.entity.ShopCategory;
 import com.smart.o2o.service.HeadLineService;
-import com.smart.o2o.service.ProductCategoryService;
 import com.smart.o2o.service.ShopCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +25,11 @@ public class MainPageController {
     @Autowired
     private ShopCategoryService shopCategoryService;
 
+    /**
+     * 展示主页信息方法，
+     * @param request
+     * @return  头条列表，一级商店类别列表
+     */
     @RequestMapping(value = "/mainpageinfo", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> mainPageInfo(HttpServletRequest request) {

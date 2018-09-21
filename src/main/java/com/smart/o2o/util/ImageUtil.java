@@ -146,7 +146,7 @@ public class ImageUtil {
 
     public static void main(String[] args) {
         try {
-            Thumbnails.of(new File("E:/File/o2o/1.jpg")).size(300, 300)
+            Thumbnails.of(new File("E:/File/o2o/m11.jpg")).size(300, 300)
                     .watermark(Positions.BOTTOM_RIGHT,ImageIO.read(new File(basePath + "/watermark.jpg")),0.5f)
                     .outputQuality(0.8).toFile("E:/File/o2o/1-new.jpg");
         } catch (IOException e) {
