@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.o2o.dao.HeadLineDao">
+    <select id="queryList" resultType="com.smart.o2o.entity.Headline">
+        select *
+        from tb_headline
+        <where>
+            <if test="condition.status != null">
+                and status = #{condition.status}
+            </if>
+        </where>
+        order by line_priority desc;
+    </select>
+</mapper>
