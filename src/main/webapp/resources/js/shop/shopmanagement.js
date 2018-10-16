@@ -1,6 +1,6 @@
 $(function () {
    var shopId = getQueryString("shopId");
-   var shopInfourl = "/shopadmin/getshopmanagementinfo?shopId=" + shopId;
+   var shopInfourl = "/o2o/shopadmin/getshopmanagementinfo?shopId=" + shopId;
 
    $.getJSON(shopInfourl, function(data) {
       if (data.redirect) {
@@ -9,7 +9,7 @@ $(function () {
           if (data.shopId != undefined && data.shopId != null) {
               shopId = data.shopId;
           }
-          $("#shopinfo").attr("href", "/shop/opshop?shopId=" + shopId);
+          $("#shopinfo").attr("href", "/o2o/shop/opshop?shopId=" + shopId);
       }
    });
 

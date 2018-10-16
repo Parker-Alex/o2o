@@ -67,9 +67,9 @@ public class ShopServiceTest extends BaseTest {
     @Test
     public void queryShopList() {
         Shop shop = new Shop();
-        User user = new User();
-        user.setUserId(1L);
-        shop.setUser(user);
+        shop.setShopName("测试");
+        shop.setShopCategory(null);
+        shop.setStatus(1);
         ShopExecution shopExecution = shopService.queryShopList(shop, 2, 5);
         System.out.println(shopExecution.getCount());
         System.out.println(shopExecution.getShopList().size());

@@ -1,6 +1,6 @@
 $(function () {
-    var getListUrl = "/shopadmin/getproductlist?pageNum=1&pageSize=100";
-    var changeStatusUrl = "/shopadmin/changestatus";
+    var getListUrl = "/o2o/shopadmin/getproductlist?pageNum=1&pageSize=100";
+    var changeStatusUrl = "/o2o/shopadmin/changestatus";
 
     getProductList();
 
@@ -22,7 +22,7 @@ $(function () {
     function showProduct(data) {
         $.each(data, function (index, item) {
             var pid = item.productId;
-            var url = "/shop/productop?pid=" + pid;
+            var url = "/o2o/shop/productop?pid=" + pid;
             var status = item.status;
             var nowStatus = "下架";
             if (status == 0) {

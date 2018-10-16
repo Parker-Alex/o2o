@@ -82,7 +82,8 @@ public class ShopDaoTest extends BaseTest {
     @Test
     public void queryShopList() {
         Shop shop = new Shop();
-//        shop.setShopName("测试");
+        shop.setShopName("测试");
+        shop.setStatus(1);
 //        shop.setStatus(0);
 //        ShopCategory shopCategory = new ShopCategory();
 //        shopCategory.setShopCategoryId(2L);
@@ -90,10 +91,15 @@ public class ShopDaoTest extends BaseTest {
 //        User user= new User();
 //        user.setUserId(1L);
 //        shop.setUser(user);
-        Area area = new Area();
-        area.setAreaId(2);
-        shop.setArea(area);
-        List<Shop> shopList = shopDao.queryShopList(shop, 0, 7);
+//        Area area = new Area();
+//        area.setAreaId(-1);
+//        shop.setArea(area);
+//        ShopCategory childSC = new ShopCategory();
+//        ShopCategory parentSC = new ShopCategory();
+//        parentSC.setShopCategoryId(1L);
+//        childSC.setParent(parentSC);
+//        shop.setShopCategory(childSC);
+        List<Shop> shopList = shopDao.queryShopList(shop, 0, 9);
         for (int i=0; i<shopList.size(); i++) {
             System.out.println(shopList.get(i));
         }

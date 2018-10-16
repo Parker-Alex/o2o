@@ -4,7 +4,7 @@ $(function () {
 
     function getlist() {
         $.ajax({
-            url:"/shopadmin/getshoplist",
+            url:"/o2o/shopadmin/getshoplist",
             type:"get",
             dataType:"json",
             success:function (result) {
@@ -43,7 +43,7 @@ $(function () {
 
     function doshop(status, id) {
         if (status == 2) {
-            url = "/shop/shopmanagement?shopId=" + id;
+            url = "/o2o/shop/shopmanagement?shopId=" + id;
             return $("<a></a>").append("管理").attr("href", url);
         }else {
             return "";

@@ -59,6 +59,11 @@
             <if test="shopCondition.shopCategory != null and shopCondition.shopCategory.shopCategoryId != null">
                 and s.shop_shopcategory_id = #{shopCondition.shopCategory.shopCategoryId}
             </if>
+            <if test="shopCondition.shopCategory != null and shopCondition.shopCategory.parent != null and
+                shopCondition.shopCategory.parent.shopCategoryId != null">
+                and s.shop_shopcategory_id in (select shopcategory_id from tb_shopcategory
+                where parent_id = #{shopCondition.shopCategory.parent.shopCategoryId})
+            </if>
             <if test="shopCondition.user != null and shopCondition.user.userId != null">
                 and s.shop_user_id = #{shopCondition.user.userId}
             </if>
@@ -85,6 +90,11 @@
             </if>
             <if test="shopCondition.shopCategory != null and shopCondition.shopCategory.shopCategoryId != null">
                 and s.shop_shopcategory_id = #{shopCondition.shopCategory.shopCategoryId}
+            </if>
+            <if test="shopCondition.shopCategory != null and shopCondition.shopCategory.parent != null
+                and shopCondition.shopCategory.parent.shopCategoryId != null">
+                and s.shop_shopcategory_id in (select shopcategory_id from tb_shopcategory where
+                parent_id = #{shopCondition.shopCategory.parent.shopCategoryId})
             </if>
             <if test="shopCondition.user != null and shopCondition.user.userId != null">
                 and s.shop_user_id = #{shopCondition.user.userId}

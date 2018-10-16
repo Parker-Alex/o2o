@@ -11,4 +11,9 @@ public class ForePageController {
     public String homePage() {
         return "fore/home";
     }
+
+    @RequestMapping("/shoplist")
+    public String shopList() {
+        return "fore/shoplist";
+    }
 }

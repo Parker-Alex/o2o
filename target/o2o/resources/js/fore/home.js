@@ -1,6 +1,6 @@
 $(function () {
 
-    var infoUrl = "/fore/mainpageinfo";
+    var infoUrl = "/o2o/fore/mainpageinfo";
 
     getInfo();
 
@@ -16,24 +16,25 @@ $(function () {
 
                     //使用.map(),回调函数中，元素在前，索引在后；.each()相反
                     sclist.map(function (item, index) {
-                        //商店类别标题（无法将商店名字以 h5 标签表示，不知道是什么原因）
-                        var title = $("<h5 class='card-title'></h5>").append(item.shopCategoryName);
+                        //商店类别标题（无法将商店名字 h5 标签表示，不知道是什么原因）
+                        var title = $("<h4 class=‘mt-0’></h4>").append(item.shopCategoryName);
                         // var title = "<h5 class='cardtitle'>" + item.shopCategoryName + "</h5>";
 
                         //商店类别描述
                         var desc = $("<p class='card-text'></p>").append(item.shopCategoryDesc);
 
                         //进入商店类别按钮
-                        var into = $("<a class='btn btn-primary text-white'>进入</a>")
-                            .attr("data-id", item.shopCategoryId);
+                        // var into = $("<a class='btn btn-primary text-white'>进入</a>")
+                        //                         //     .attr("data-id", item.shopCategoryId);
 
                         //商品类别图片路径
-                        var img = $("<img class='card-img-top' alt='Card image cap'>")
+                        var img = $("<img class='mr-3' style='width: 150px; '>")
                             .attr("src", "../resources/img/shopcategory/" + item.shopCategoryId +".jpg");
 
-                        var body = $("<div class='card-body'></div>").append(title).append(desc).append(into);
+                        var body = $("<div class='media-body'></div>").append(title).append(desc);
 
-                        $("<div class='card' style='width: 18rem;'></div>").append(img).append(body).appendTo(".mycard");
+                        $("<div class='col-4'></div>").append($("<div class='media mt-3'></div>").append(img).append(body))
+                            .appendTo(".myrow");
                     });
 
                     //得到头条列表
