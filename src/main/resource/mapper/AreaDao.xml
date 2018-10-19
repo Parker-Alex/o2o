@@ -4,9 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smart.o2o.dao.AreaDao">
     <select id="readAreaList" resultType="com.smart.o2o.entity.Area">
-        select *
-        from tb_area
-        order by
-        area_priority desc ;
+        SELECT *
+        FROM tb_area
+        ORDER BY
+        area_priority DESC;
     </select>
 </mapper>

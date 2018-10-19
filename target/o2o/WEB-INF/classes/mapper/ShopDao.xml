@@ -29,7 +29,7 @@
         </association>
     </resultMap>
     <select id="queryShopList" resultMap="shopMap">
-        select
+        SELECT
                s.shop_id,
                s.shop_name,
                s.shop_tel,
@@ -45,66 +45,66 @@
                a.area_name,
                sc.shopcategory_id,
                sc.shopcategory_name
-        from tb_shop s, tb_area a, tb_shopcategory sc
+        FROM tb_shop s, tb_area a, tb_shopcategory sc
         <where>
             <if test="shopCondition.shopName != null">
-                and s.shop_name like '%${shopCondition.shopName}%'
+                AND s.shop_name LIKE '%${shopCondition.shopName}%'
             </if>
             <if test="shopCondition.status != null">
-                and s.status = #{shopCondition.status}
+                AND s.status = #{shopCondition.status}
             </if>
             <if test="shopCondition.area != null and shopCondition.area.areaId != null">
-                and s.shop_area_id = #{shopCondition.area.areaId}
+                AND s.shop_area_id = #{shopCondition.area.areaId}
             </if>
             <if test="shopCondition.shopCategory != null and shopCondition.shopCategory.shopCategoryId != null">
-                and s.shop_shopcategory_id = #{shopCondition.shopCategory.shopCategoryId}
+                AND s.shop_shopcategory_id = #{shopCondition.shopCategory.shopCategoryId}
             </if>
             <if test="shopCondition.shopCategory != null and shopCondition.shopCategory.parent != null and
                 shopCondition.shopCategory.parent.shopCategoryId != null">
-                and s.shop_shopcategory_id in (select shopcategory_id from tb_shopcategory
-                where parent_id = #{shopCondition.shopCategory.parent.shopCategoryId})
+                AND s.shop_shopcategory_id IN (SELECT shopcategory_id FROM tb_shopcategory
+                WHERE parent_id = #{shopCondition.shopCategory.parent.shopCategoryId})
             </if>
             <if test="shopCondition.user != null and shopCondition.user.userId != null">
-                and s.shop_user_id = #{shopCondition.user.userId}
+                AND s.shop_user_id = #{shopCondition.user.userId}
             </if>
-            and s.shop_area_id=a.area_id
-            and s.shop_shopcategory_id=sc.shopcategory_id
+            AND s.shop_area_id=a.area_id
+            AND s.shop_shopcategory_id=sc.shopcategory_id
         </where>
-        order by
-        s.priority desc
-        limit #{start}, #{size};
+        ORDER BY
+        s.priority DESC
+        LIMIT #{start}, #{size};
     </select>
     <select id="getCount" resultType="int">
-      select
+      SELECT
       count(1)
-      from tb_shop s, tb_area a, tb_shopcategory sc
+      FROM tb_shop s, tb_area a, tb_shopcategory sc
         <where>
             <if test="shopCondition.shopName != null">
-                and s.shop_name like '%${shopCondition.shopName}%'
+                AND s.shop_name LIKE '%${shopCondition.shopName}%'
             </if>
             <if test="shopCondition.status != null">
-                and s.status = #{shopCondition.status}
+                AND s.status = #{shopCondition.status}
             </if>
             <if test="shopCondition.area != null and shopCondition.area.areaId != null">
-                and s.shop_area_id = #{shopCondition.area.areaId}
+                AND s.shop_area_id = #{shopCondition.area.areaId}
             </if>
             <if test="shopCondition.shopCategory != null and shopCondition.shopCategory.shopCategoryId != null">
-                and s.shop_shopcategory_id = #{shopCondition.shopCategory.shopCategoryId}
+                AND s.shop_shopcategory_id = #{shopCondition.shopCategory.shopCategoryId}
             </if>
             <if test="shopCondition.shopCategory != null and shopCondition.shopCategory.parent != null
                 and shopCondition.shopCategory.parent.shopCategoryId != null">
-                and s.shop_shopcategory_id in (select shopcategory_id from tb_shopcategory where
+                AND s.shop_shopcategory_id IN (SELECT shopcategory_id FROM tb_shopcategory where
                 parent_id = #{shopCondition.shopCategory.parent.shopCategoryId})
             </if>
             <if test="shopCondition.user != null and shopCondition.user.userId != null">
-                and s.shop_user_id = #{shopCondition.user.userId}
+                AND s.shop_user_id = #{shopCondition.user.userId}
             </if>
-            and s.shop_area_id=a.area_id
-            and s.shop_shopcategory_id=sc.shopcategory_id
+            AND s.shop_area_id=a.area_id
+            AND s.shop_shopcategory_id=sc.shopcategory_id
         </where>
     </select>
     <select id="readByShopId" resultMap="shopMap">
-        select
+        SELECT
                s.shop_id,
                s.shop_name,
                s.shop_tel,
@@ -120,13 +120,13 @@
                a.area_name,
                sc.shopcategory_id,
                sc.shopcategory_name
-        from tb_shop s, tb_area a, tb_shopcategory sc
-        where s.shop_area_id=a.area_id
-        and s.shop_shopcategory_id=sc.shopcategory_id
-        and s.shop_id=#{shopId};
+        FROM tb_shop s, tb_area a, tb_shopcategory sc
+        WHERE s.shop_area_id=a.area_id
+        AND s.shop_shopcategory_id=sc.shopcategory_id
+        AND s.shop_id=#{shopId};
     </select>
     <insert id="createShop" useGeneratedKeys="true" keyColumn="shop_id" keyProperty="shopId">
-        insert into tb_shop (shop_name,
+        INSERT INTO tb_shop (shop_name,
                              priority,
                              shop_img,
                              shop_addr,
@@ -139,11 +139,11 @@
                              shop_area_id,
                              shop_user_id,
                              shop_shopcategory_id)
-        values (#{shopName},#{priority},#{shopImg},#{shopAddr},#{shopDesc},#{shopTel},#{shopAdvice},#{status}
+        VALUES (#{shopName},#{priority},#{shopImg},#{shopAddr},#{shopDesc},#{shopTel},#{shopAdvice},#{status}
                        ,#{createTime},#{lastEditTime},#{area.areaId},#{user.userId},#{shopCategory.shopCategoryId});
     </insert>
     <update id="updateShop" parameterType="com.smart.o2o.entity.Shop">
-        update tb_shop
+        UPDATE tb_shop
         <set>
             <if test="shopName!=null">shop_name=#{shopName},</if>
             <if test="priority!=null">priority=#{priority},</if>
@@ -157,6 +157,6 @@
             <if test="area!=null">shop_area_id=#{area.areaId},</if>
             <if test="shopCategory!=null">shop_shopcategory_id=#{shopCategory.shopCategoryId}</if>
         </set>
-        where shop_id = #{shopId};
+        WHERE shop_id = #{shopId};
     </update>
 </mapper>

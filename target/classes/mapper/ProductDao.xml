@@ -34,14 +34,14 @@
     </resultMap>
     <insert id="addProduct" parameterType="com.smart.o2o.entity.Product" useGeneratedKeys="true"
             keyProperty="productId" keyColumn="product_id">
-        insert into tb_product(product_name, priority, product_desc, img_addr, normal_price, promotion_price,
+        INSERT INTO tb_product(product_name, priority, product_desc, img_addr, normal_price, promotion_price,
                                create_time, last_edit_time, status, sid, pcid)
-        values (#{productName},#{priority},#{productDesc},#{imgAddr},#{normalPrice},#{promotionPrice},#{createTime},
+        VALUES (#{productName},#{priority},#{productDesc},#{imgAddr},#{normalPrice},#{promotionPrice},#{createTime},
                        #{lastEditTime},#{status},#{shop.shopId},#{productCategory.id})
     </insert>
     <update id="updateProduct" parameterType="com.smart.o2o.entity.Product" useGeneratedKeys="true"
             keyProperty="productId" keyColumn="product_id">
-        update tb_product
+        UPDATE tb_product
         <set>
             <if test="status!=null">status=#{status},</if>
             <if test="productName!=null">product_name=#{productName},</if>
@@ -53,11 +53,11 @@
             <if test="lastEditTime!=null">last_edit_time=#{lastEditTime},</if>
             <if test="productCategory!=null and productCategory.id!=null">pcid=#{productCategory.id}</if>
         </set>
-        where product_id = #{productId}
-        and sid = #{shop.shopId};
+        WHERE product_id = #{productId}
+        AND sid = #{shop.shopId};
     </update>
     <select id="getProductById" resultMap="productMap">
-        select
+        SELECT
                p.product_id,
                p.product_name,
                p.product_desc,
@@ -79,53 +79,53 @@
                s.shop_name,
                pc.id,
                pc.name
-        from tb_shop s, tb_productcategory pc, tb_product p
-             left join tb_img i
-        on p.product_id = i.pid
-        where p.product_id = #{pid} and p.sid = s.shop_id and p.pcid = pc.id
-        order by i.priority desc
+        FROM tb_shop s, tb_productcategory pc, tb_product p
+             LEFT JOIN tb_img i
+        ON p.product_id = i.pid
+        WHERE p.product_id = #{pid} AND p.sid = s.shop_id AND p.pcid = pc.id
+        ORDER BY i.priority DESC
     </select>
     <delete id="deleteProductById" parameterType="long">
-        delete from tb_product where product_id = #{pid};
+        DELETE FROM tb_product WHERE product_id = #{pid};
     </delete>
     <select id="productList" resultType="com.smart.o2o.entity.Product">
-        select * from tb_product
+        SELECT * FROM tb_product
         <where>
             <if test="condition.shop != null and condition.shop.shopId != null">
-                and sid = #{condition.shop.shopId}
+                AND sid = #{condition.shop.shopId}
             </if>
             <if test="condition.productCategory != null and condition.productCategory.id != null ">
-                and pcid = #{condition.productCategory.id}
+                AND pcid = #{condition.productCategory.id}
             </if>
             <if test="condition.productName != null">
-                and product_name like '%${condition.productName}%'
+                AND product_name LIKE '%${condition.productName}%'
             </if>
             <if test="condition.status != null">
-                and status = #{condition.status}
+                AND status = #{condition.status}
             </if>
         </where>
-        order by
-        priority desc
-        limit #{start},#{size};
+        ORDER BY
+        priority DESC
+        LIMIT #{start},#{size};
     </select>
     <select id="count" resultType="int">
-        select count(*) from tb_product
+        SELECT count(*) FROM tb_product
         <where>
             <if test="condition.shop != null and condition.shop.shopId != null">
-                and sid = #{condition.shop.shopId}
+                AND sid = #{condition.shop.shopId}
             </if>
             <if test="condition.productCategory != null and condition.productCategory.id != null ">
-                and pcid = #{condition.productCategory.id}
+                AND pcid = #{condition.productCategory.id}
             </if>
             <if test="condition.productName != null">
-                and product_name like '%${condition.productName}%'
+                AND product_name LIKE '%${condition.productName}%'
             </if>
             <if test="condition.status != null">
-                and status = #{condition.status}
+                AND status = #{condition.status}
             </if>
         </where>
     </select>
     <update id="productCategoryIdToNull" parameterType="long">
-        update tb_product set pcid = null where pcid = #{pcid};
+        UPDATE tb_product SET pcid = NULL WHERE pcid = #{pcid};
     </update>
 </mapper>

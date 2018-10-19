@@ -4,24 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smart.o2o.dao.ShopCategoryDao">
     <select id="readShopCategoryList" resultType="com.smart.o2o.entity.ShopCategory">
-        select *
-        from tb_shopcategory
+        SELECT *
+        FROM tb_shopcategory
         <where>
             <if test="condition == null">
-                and parent_id is null
+                AND parent_id IS NULL
             </if>
             <if test="condition != null">
-                and parent_id is not null
+                AND parent_id IS NOT NULL
             </if>
             <if test="condition != null and condition.parent != null and condition.parent.shopCategoryId != null">
-                and parent_id = #{condition.parent.shopCategoryId}
+                AND parent_id = #{condition.parent.shopCategoryId}
             </if>
         </where>
-        order by priority desc ;
+        ORDER BY priority DESC;
     </select>
-    <select id="getByName" resultType="com.smart.o2o.entity.ShopCategory">
-        select *
-        from tb_shopcategory
-        where shopcategory_name = #{shopCategoryName}
+<select id="getByName" resultType="com.smart.o2o.entity.ShopCategory">
+        SELECT *
+        FROM tb_shopcategory
+        WHERE shopcategory_name = #{shopCategoryName}
     </select>
 </mapper>

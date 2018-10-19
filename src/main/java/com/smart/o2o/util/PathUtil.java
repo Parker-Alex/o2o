@@ -7,7 +7,7 @@ public class PathUtil {
 
     /**
      * 根据操作系统的不同获取图片的根路径，是所有图片存放的路径
-     * @return
+     * @return 图片根路径
      */
     public static String getImgBasePath() {
         //获取操作系统
@@ -15,10 +15,10 @@ public class PathUtil {
         String basePath = "";
         //如果是windows系统
         if (os.toLowerCase().startsWith("win")) {
-            basePath = "E:/File/o2o/";
+            basePath = "E:/File/o2o";
         }else {
             //如果是linux系统
-            basePath = "/home/o2o/image/";
+            basePath = "/home/o2o/image";
         }
         //将分隔符替换成系统的分隔符
         basePath = basePath.replace("/", separator);
@@ -27,11 +27,11 @@ public class PathUtil {
 
     /**
      * 获取店铺照片路径
-     * @param shopId
-     * @return
+     * @param shopId 店铺id
+     * @return 图片子路径
      */
     public static String getShopImgPath(long shopId) {
-        String imgPath = "upload/items/shop/" + shopId + "/";
+        String imgPath = "/upload/items/shop/" + shopId + "/";
         return imgPath.replace("/", separator);
     }
 }

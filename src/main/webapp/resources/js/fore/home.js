@@ -1,4 +1,5 @@
-$(function () {
+// $(function () {
+$(document).ready(function (){
 
     var infoUrl = "/o2o/fore/mainpageinfo";
 
@@ -17,24 +18,27 @@ $(function () {
                     //使用.map(),回调函数中，元素在前，索引在后；.each()相反
                     sclist.map(function (item, index) {
                         //商店类别标题（无法将商店名字 h5 标签表示，不知道是什么原因）
-                        var title = $("<h4 class=‘mt-0’></h4>").append(item.shopCategoryName);
+                        var title = $("<h2></h2>").append(item.shopCategoryName);
                         // var title = "<h5 class='cardtitle'>" + item.shopCategoryName + "</h5>";
 
                         //商店类别描述
-                        var desc = $("<p class='card-text'></p>").append(item.shopCategoryDesc);
+                        var desc = $("<p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>").append(item.shopCategoryDesc);
 
-                        //进入商店类别按钮
+                        // 进入商店类别按钮
                         // var into = $("<a class='btn btn-primary text-white'>进入</a>")
-                        //                         //     .attr("data-id", item.shopCategoryId);
+                        //                             .attr("data-id", item.shopCategoryId);
+                        var into = $("<p><a class='btn btn-secondary' href='#' role='button'>View details &raquo;</a></p>")
 
                         //商品类别图片路径
-                        var img = $("<img class='mr-3' style='width: 150px; '>")
+                        var img = $("<img class='rounded-circle' width='140' height='140'>")
                             .attr("src", "../resources/img/shopcategory/" + item.shopCategoryId +".jpg");
 
-                        var body = $("<div class='media-body'></div>").append(title).append(desc);
+                        //将图片变为超链接
+                        var imgLink = $("<a href='#' class='myLink'></a>").append(img).attr("data-id", item.shopCategoryId);
 
-                        $("<div class='col-4'></div>").append($("<div class='media mt-3'></div>").append(img).append(body))
-                            .appendTo(".myrow");
+                        //动态拼接
+                        $("<div class='col-lg-4'></div>").append(imgLink).append(title).append(desc).append(into)
+                            .appendTo(".marketing .myrow");
                     });
 
                     //得到头条列表
@@ -70,10 +74,9 @@ $(function () {
         );
     }
 
-    $(".mycard").on("click", ".btn", function (e) {
-        var id = $(this).attr("data-id");
-        // alert($(this).attr("data-id"));
-        // alert(e.currentTarget.dataset.id);
-        $(this).attr("href", "/fore/shoplist?parentId=" + id);
+    //点击一级类别进入店铺列表事件
+    $(".marketing .myrow").on("click", ".myLink", function () {
+        var parentId = $(this).attr("data-id");
+        $(this).attr("href", "/o2o/main/shoplist?parentId=" + parentId);
     })
 });

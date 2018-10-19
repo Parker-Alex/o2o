@@ -16,4 +16,9 @@ public class ForePageController {
     public String shopList() {
         return "fore/shoplist";
     }
+
+    @RequestMapping("/ttt")
+    public String test() {
+        return "tttt";
+    }
 }

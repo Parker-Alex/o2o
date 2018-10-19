@@ -4,13 +4,13 @@ $(function () {
     //shopId为空,就创建店铺；不为空，就修改店铺
     var isEdit = shopId ? true : false;
     //得到店铺初始化信息url
-    var getInfoUrl = "/shopadmin/getshopinfo";
+    var getInfoUrl = "/o2o/shopadmin/getshopinfo";
     //创建店铺url
-    var createshop = "/shopadmin/createshop";
+    var createshop = "/o2o/shopadmin/createshop";
     //得到店铺详细信息
-    var getShopInfoUrl = "/shopadmin/getshopbyid?shopId=" + shopId;
+    var getShopInfoUrl = "/o2o/shopadmin/getshopbyid?shopId=" + shopId;
     //更新店铺url
-    var updateshop = "/shopadmin/updateshop";
+    var updateshop = "/o2o/shopadmin/updateshop";
     if (isEdit) {
         getShop(shopId);
     }else {

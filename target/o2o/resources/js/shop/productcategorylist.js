@@ -1,8 +1,8 @@
 $(function () {
 
-    var listUrl = "/shopadmin/productcategorylist";
-    var addUrl = "/shopadmin/addproductcategory";
-    var deleteUrl = "/shopadmin/deleteproductcategory";
+    var listUrl = "/o2o/shopadmin/productcategorylist";
+    var addUrl = "/o2o/shopadmin/addproductcategory";
+    var deleteUrl = "/o2o/shopadmin/deleteproductcategory";
 
     getList();
 

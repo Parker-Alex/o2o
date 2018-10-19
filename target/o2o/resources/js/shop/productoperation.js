@@ -2,13 +2,13 @@ $(function () {
 
     var productId = getQueryString("pid");
     //添加商品路径
-    var addUrl = "/shopadmin/addproduct";
+    var addUrl = "/o2o/shopadmin/addproduct";
     //通过productId得到商品信息路径
-    var infoUrl = "/shopadmin/getproductbyid?pid=" + productId;
+    var infoUrl = "/o2o/shopadmin/getproductbyid?pid=" + productId;
     //得到商品分类路径
-    var categoryUrl = "/shopadmin/productcategorylist";
+    var categoryUrl = "/o2o/shopadmin/productcategorylist";
     //更新商品路径
-    var updateUrl = "/shopadmin/updateproduct";
+    var updateUrl = "/o2o/shopadmin/updateproduct";
     //标明是商品添加还是修改操作
     var isEdit = false;
     //如果有存在productId
@@ -116,7 +116,7 @@ $(function () {
             success: function (result) {
                 if (result.success) {
                     alert("提交成功");
-                    location.href = "/shop/productlist";
+                    location.href = "/o2o/shop/productlist";
                 }else {
                     alert("提交失败: " + result.msg);
                 }
