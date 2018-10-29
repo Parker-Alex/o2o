@@ -1,5 +1,7 @@
 $(function () {
 
+    let shopDetailUrl = "/o2o/main/shopdetail";
+
     //定义展示店铺相关信息路由
     let showShopUrl = "/o2o/fore/shopListpageinfo";
 
@@ -64,11 +66,13 @@ $(function () {
                         let header = $("<div class='card-header'></div>")
                             // .append($("<img>").attr("src", imgPath + item.shopImg));
                             .append($("<img>").attr("src", item.shopImg));
+                        //进入店铺按钮
+                        let shopbtn = $("<button class='btn btn-primary mybtn'>进入</button>").attr("data-id", item.shopId);
                         //卡片身体，显示店铺名称、描述、和“进入按钮”
                         let body = $("<div class='card-body'></div>")
                             .append($("<h4 class='card-title'><i class='fas fa-store mr-3'></i></h4>").append(item.shopName))
                             .append($("<p class='card-text'></p>").append(item.shopDesc))
-                            .append($("<a href= '#' class='btn btn-primary'>进入</a>"));
+                            .append(shopbtn);
                         //卡片尾部，显示日期
                         let footer = $("<div class='card-footer text-muted'></div>")
                             .append("创建时间：" + moment(item.createTime).format("YYYY-MM-DD"));
@@ -85,6 +89,11 @@ $(function () {
             }
         );
     }
+
+    $(".container").on("click", ".btn", function () {
+        let shopId = $(this).attr("data-id");
+        location.href = shopDetailUrl + "?shopId=" + shopId;
+    });
 
     //点击店铺类别进行查找店铺
     $(".shopCategory").on("click", ".btn", function () {
